@@ -1,0 +1,12 @@
+# package
+/vendor
+
+# idea
+/.idea
+
+# build
+/build
+
+# test
+/test
+trove_local.json
