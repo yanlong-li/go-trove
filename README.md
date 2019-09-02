@@ -12,6 +12,10 @@ https://trove.daohang.dev
 暂不公开
 
 更新日志
+
+    2019年9月2日
+    新增git版本控制支持Tag tag@https://github.com/XXXXX/XXXX 默认为commit commit@https://github.com/XXXX
+    优化git@ssh引入包
     
     2019年9月2日
     强化命令行

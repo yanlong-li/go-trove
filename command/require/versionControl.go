@@ -11,7 +11,7 @@ import (
 
 func Control(url string) (source, versionControl string) {
 	versionControlPos := strings.Index(url, "@")
-	if versionControlPos < 0 {
+	if versionControlPos < 0 || url[:versionControlPos] == "git" {
 		versionControl = "commit"
 		source = url
 	} else {
@@ -48,16 +48,70 @@ func GitClone(customerPackage config.CustomerPackage, packageName string) {
 		fmt.Println("恢复失败", err)
 		return
 	}
-	fmt.Println("恢复成功")
+	fmt.Println("下载成功")
+	// 切换分支
+	GitCheckoutBranch(customerPackage, packageName)
+	if customerPackage.Version != "*" {
+		// 切换版本
+		GitCheckoutVersion(customerPackage, packageName)
+	}
+
 }
 func GitUpdate(customerPackage config.CustomerPackage, packageName string) {
 	fmt.Println("正在更新:" + packageName)
 	cmd := exec.Command("git", "pull")
 	cmd.Dir = "vendor/" + packageName
-	buf, err := cmd.Output()
+	_, err := cmd.Output()
 	if err != nil {
 		fmt.Println("更新失败", err)
 		return
 	}
-	fmt.Printf("更新成功: %s", buf)
+	fmt.Println("更新成功")
+}
+
+func GitCheckoutBranch(customerPackage config.CustomerPackage, packageName string) {
+	// 切换分支
+	cmd := exec.Command("git", "checkout", "-b", "_trove")
+	cmd.Dir = config.VendorPath + "/" + packageName
+	_, err := cmd.Output()
+	if err != nil {
+		fmt.Println("分支切换失败", err)
+		return
+	}
+	//git branch --set-upstream-to=origin/dev
+	cmd = exec.Command("git", "branch", "--set-upstream-to=origin/master")
+	cmd.Dir = config.VendorPath + "/" + packageName
+	_, err = cmd.Output()
+	if err != nil {
+		fmt.Println("分支切换关联失败", err)
+		return
+	}
+	fmt.Println("分支切换成功")
+}
+
+func GitCheckoutVersion(customerPackage config.CustomerPackage, packageName string) {
+
+	if customerPackage.Version == "*" {
+		fmt.Println("无需切换版本")
+		return
+	}
+
+	_, versionType := Control(customerPackage.Source)
+	var cmd *exec.Cmd
+	if versionType == "commit" {
+		cmd = exec.Command("git", "reset", "--hard", customerPackage.Version)
+	} else if versionType == "tag" {
+		cmd = exec.Command("git", "reset", customerPackage.Version)
+	} else {
+		fmt.Println("不支持的版本控制方式")
+		return
+	}
+
+	cmd.Dir = config.VendorPath + "/" + packageName
+	_, err := cmd.Output()
+	if err != nil {
+		fmt.Println("版本切换失败", err)
+		return
+	}
+	fmt.Println("版本切换成功")
 }

@@ -21,3 +21,5 @@ type CustomerPackage struct {
 
 var TrovePackagePath string = "trove.json"
 var Version string = "0.0.1"
+
+var VendorPath string = "vendor"

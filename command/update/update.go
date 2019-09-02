@@ -35,6 +35,7 @@ func Update(args []string) {
 				require.GitClone(v, k)
 			} else {
 				require.GitUpdate(v, k)
+				require.GitCheckoutVersion(v, k)
 			}
 			require.GitVersion(k, v)
 			fmt.Println()

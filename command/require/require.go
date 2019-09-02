@@ -20,7 +20,7 @@ func Require(args []string) {
 		fmt.Println("加载错误", err)
 	}
 
-	source, _ := Control(args[0])
+	source, versionType := Control(args[0])
 	//fmt.Println(source, versionControl)
 	//return
 	sourceUrl, err := url.Parse(source)
@@ -47,7 +47,7 @@ func Require(args []string) {
 		return
 	} else {
 		// 如果没有则写入新记录到列表中 默认版本号为 * 默认类型为 git ，git默认版本控制方式为 commit:
-		newPackage := &config.CustomerPackage{Version: "*", Type: "git", Source: source}
+		newPackage := &config.CustomerPackage{Version: "*", Type: "git", Source: versionType + "@" + source}
 		trovePackage.Custom[newPackageName] = *newPackage
 		err = config.Save(trovePackage)
 		if err != nil {
