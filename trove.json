@@ -1,18 +1,18 @@
 {
-	"Name": "trove",
-	"Version": "",
-	"Description": "这是一个开源的包管理工具",
-	"Homepage": "https://github.com/Yanlong-LI/go-trove",
-	"Type": "project",
-	"License": "MulanPSL",
-	"Require": {
-		"Test": "0.0.0.1"
-	},
-	"Custom": {
-		"Test2": {
-			"Version": "0.0.0.1",
-			"Source": "d:/phper/workspace/go",
-			"Type": "path"
-		}
-	}
+  "Name": "trove",
+  "Version": "0.0.1",
+  "Description": "这是一个开源的包管理工具",
+  "Homepage": "https://github.com/Yanlong-LI/go-trove",
+  "Type": "project",
+  "License": "MulanPSL",
+  "Require": {
+    "Test": "0.0.0.1"
+  },
+  "Custom": {
+    "yanlong-li/test": {
+      "Version": "*",
+      "Source": "https://github.com/Yanlong-LI/test",
+      "Type": "git"
+    }
+  }
 }
