@@ -5,6 +5,7 @@ import (
 	Help "trove/command/help"
 	"trove/command/install"
 	"trove/command/list"
+	"trove/command/remove"
 	"trove/command/require"
 	"trove/command/update"
 )
@@ -30,6 +31,8 @@ func Shunt(args []string) {
 		install.Install(args[1:])
 	case "update":
 		update.Update(args[1:])
+	case "remove":
+		remove.Remove(args[1:])
 	default:
 		fmt.Println("没有发现任何匹配命令", args)
 	}
