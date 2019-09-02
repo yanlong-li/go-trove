@@ -7,22 +7,37 @@ import (
 	"trove/config"
 )
 
-func Update() {
+func Update(args []string) {
 	trovePackage, err := config.Load(config.TrovePackagePath)
 	if err != nil {
 		fmt.Println("配置文件加载失败")
 		return
 	}
-
-	for k, v := range trovePackage.Custom {
-
-		_, err := os.Stat("vendor/" + k)
-		if err != nil {
-			require.GitClone(v, k)
+	if len(args) > 0 {
+		newPackageName := args[0]
+		if customerPackage, ok := trovePackage.Custom[newPackageName]; ok {
+			_, err := os.Stat("vendor/" + newPackageName)
+			if err != nil {
+				require.GitClone(customerPackage, newPackageName)
+			} else {
+				require.GitUpdate(customerPackage, newPackageName)
+			}
+			require.GitVersion(newPackageName, customerPackage)
+			fmt.Println()
 		} else {
-			require.GitUpdate(v, k)
+			fmt.Println("未引入包:" + newPackageName)
 		}
-		require.GitVersion(k, v)
-		fmt.Println()
+	} else {
+		for k, v := range trovePackage.Custom {
+
+			_, err := os.Stat("vendor/" + k)
+			if err != nil {
+				require.GitClone(v, k)
+			} else {
+				require.GitUpdate(v, k)
+			}
+			require.GitVersion(k, v)
+			fmt.Println()
+		}
 	}
 }

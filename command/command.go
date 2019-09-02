@@ -27,9 +27,9 @@ func Shunt(args []string) {
 	case "--version":
 		Help.Version()
 	case "install":
-		install.Install()
+		install.Install(args[1:])
 	case "update":
-		update.Update()
+		update.Update(args[1:])
 	default:
 		fmt.Println("没有发现任何匹配命令", args)
 	}
