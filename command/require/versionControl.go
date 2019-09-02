@@ -26,7 +26,7 @@ func GitVersion(packageName string, customerPackage config.CustomerPackage) {
 
 	cmd := exec.Command("git", "log", "--pretty=format:\"%h\"")
 	cmd.Dir = "vendor/" + packageName
-	fmt.Println(cmd.Dir)
+	//fmt.Println(cmd.Dir)
 	buf, err := cmd.Output()
 	if err != nil {
 		fmt.Println("版本检测失败", err)
@@ -38,15 +38,26 @@ func GitVersion(packageName string, customerPackage config.CustomerPackage) {
 	}
 }
 
-func gitClone(customerPackage config.CustomerPackage, packageName string) {
+func GitClone(customerPackage config.CustomerPackage, packageName string) {
 
-	fmt.Println("正在恢复")
+	fmt.Println("正在恢复:" + packageName)
 	source, _ := Control(customerPackage.Source)
 	cmd := exec.Command("git", "clone", source, "vendor/"+packageName)
-	buf, err := cmd.Output()
+	_, err := cmd.Output()
 	if err != nil {
 		fmt.Println("恢复失败", err)
 		return
 	}
-	fmt.Printf("恢复成功: %s\n", buf)
+	fmt.Println("恢复成功")
+}
+func GitUpdate(customerPackage config.CustomerPackage, packageName string) {
+	fmt.Println("正在更新:" + packageName)
+	cmd := exec.Command("git", "pull")
+	cmd.Dir = "vendor/" + packageName
+	buf, err := cmd.Output()
+	if err != nil {
+		fmt.Println("更新失败", err)
+		return
+	}
+	fmt.Printf("更新成功: %s", buf)
 }

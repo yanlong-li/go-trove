@@ -13,6 +13,11 @@
       "Version": "*",
       "Source": "https://github.com/Yanlong-LI/test",
       "Type": "git"
+    },
+    "yanlong-li/test2": {
+      "Version": "*",
+      "Source": "https://github.com/Yanlong-LI/test",
+      "Type": "git"
     }
   }
 }

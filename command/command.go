@@ -3,8 +3,10 @@ package command
 import (
 	"fmt"
 	Help "trove/command/help"
+	"trove/command/install"
 	"trove/command/list"
 	"trove/command/require"
+	"trove/command/update"
 )
 
 func Shunt(args []string) {
@@ -24,6 +26,10 @@ func Shunt(args []string) {
 		fallthrough
 	case "--version":
 		Help.Version()
+	case "install":
+		install.Install()
+	case "update":
+		update.Update()
 	default:
 		fmt.Println("没有发现任何匹配命令", args)
 	}

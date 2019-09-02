@@ -39,7 +39,7 @@ func Require(args []string) {
 		_, err := os.Stat("vendor/" + newPackageName)
 		if err != nil {
 			fmt.Println(newPackageName + " 包未加载到本地")
-			gitClone(customerPackage, newPackageName)
+			GitClone(customerPackage, newPackageName)
 		}
 		// 检测包版本信息
 		GitVersion(newPackageName, customerPackage)
@@ -55,7 +55,7 @@ func Require(args []string) {
 		}
 		fmt.Println("已保存配置")
 		// 恢复包
-		gitClone(*newPackage, newPackageName)
+		GitClone(*newPackage, newPackageName)
 	}
 
 }
