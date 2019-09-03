@@ -13,6 +13,10 @@ https://trove.daohang.dev
 
 更新日志
 
+    2019年9月3日
+    优化版本控制结构
+    修复更新单个包时未切换到指定版本问题
+
     2019年9月2日
     新增git版本控制支持Tag tag@https://github.com/XXXXX/XXXX 默认为commit commit@https://github.com/XXXX
     优化git@ssh引入包
@@ -23,6 +27,6 @@ https://trove.daohang.dev
     新增install安装不存在的包
     新增update更新包命令
     新增list显示所有引入的包
-    新增-v，--version输出版本号
+    新增-v,--version输出版本号
     新增-h,--help 输出帮助提示
     新增 remove 移除包

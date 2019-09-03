@@ -3,7 +3,7 @@ package install
 import (
 	"fmt"
 	"os"
-	"trove/command/require"
+	"trove/command/version"
 	"trove/config"
 )
 
@@ -19,9 +19,9 @@ func Install(args []string) {
 		if customerPackage, ok := trovePackage.Custom[newPackageName]; ok {
 			_, err := os.Stat("vendor/" + newPackageName)
 			if err != nil {
-				require.GitClone(customerPackage, newPackageName)
+				version.GitClone(customerPackage, newPackageName)
 			}
-			require.GitVersion(newPackageName, customerPackage)
+			version.GitVersion(newPackageName, customerPackage)
 			fmt.Println()
 		} else {
 			fmt.Println("未引入包:" + newPackageName)
@@ -32,11 +32,11 @@ func Install(args []string) {
 			_, err := os.Stat("vendor/" + k)
 			if err != nil {
 				fmt.Println(k)
-				require.GitClone(v, k)
+				version.GitClone(v, k)
 			} else {
 				fmt.Println(k)
 			}
-			require.GitVersion(k, v)
+			version.GitVersion(k, v)
 			fmt.Println()
 		}
 	}

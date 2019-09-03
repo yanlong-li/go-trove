@@ -3,7 +3,7 @@ package update
 import (
 	"fmt"
 	"os"
-	"trove/command/require"
+	"trove/command/version"
 	"trove/config"
 )
 
@@ -18,11 +18,12 @@ func Update(args []string) {
 		if customerPackage, ok := trovePackage.Custom[newPackageName]; ok {
 			_, err := os.Stat("vendor/" + newPackageName)
 			if err != nil {
-				require.GitClone(customerPackage, newPackageName)
+				version.GitClone(customerPackage, newPackageName)
 			} else {
-				require.GitUpdate(customerPackage, newPackageName)
+				version.GitUpdate(customerPackage, newPackageName)
+				version.GitCheckoutVersion(customerPackage, newPackageName)
 			}
-			require.GitVersion(newPackageName, customerPackage)
+			version.GitVersion(newPackageName, customerPackage)
 			fmt.Println()
 		} else {
 			fmt.Println("未引入包:" + newPackageName)
@@ -32,12 +33,12 @@ func Update(args []string) {
 
 			_, err := os.Stat("vendor/" + k)
 			if err != nil {
-				require.GitClone(v, k)
+				version.GitClone(v, k)
 			} else {
-				require.GitUpdate(v, k)
-				require.GitCheckoutVersion(v, k)
+				version.GitUpdate(v, k)
+				version.GitCheckoutVersion(v, k)
 			}
-			require.GitVersion(k, v)
+			version.GitVersion(k, v)
 			fmt.Println()
 		}
 	}

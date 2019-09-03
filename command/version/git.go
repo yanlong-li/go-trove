@@ -1,4 +1,4 @@
-package require
+package version
 
 import (
 	"fmt"
@@ -7,9 +7,8 @@ import (
 	"trove/config"
 )
 
-// 版本控制
-
-func Control(url string) (source, versionControl string) {
+// GIT 版本控制 分流 目前支持 commit@ tag@
+func GitShunt(url string) (source, versionControl string) {
 	versionControlPos := strings.Index(url, "@")
 	if versionControlPos < 0 || url[:versionControlPos] == "git" {
 		versionControl = "commit"
@@ -41,7 +40,7 @@ func GitVersion(packageName string, customerPackage config.CustomerPackage) {
 func GitClone(customerPackage config.CustomerPackage, packageName string) {
 
 	fmt.Println("正在恢复:" + packageName)
-	source, _ := Control(customerPackage.Source)
+	source, _ := GitShunt(customerPackage.Source)
 	cmd := exec.Command("git", "clone", source, "vendor/"+packageName)
 	_, err := cmd.Output()
 	if err != nil {
@@ -59,7 +58,7 @@ func GitClone(customerPackage config.CustomerPackage, packageName string) {
 }
 func GitUpdate(customerPackage config.CustomerPackage, packageName string) {
 	fmt.Println("正在更新:" + packageName)
-	cmd := exec.Command("git", "pull")
+	cmd := exec.Command("git", "pull", "--all")
 	cmd.Dir = "vendor/" + packageName
 	_, err := cmd.Output()
 	if err != nil {
@@ -96,7 +95,7 @@ func GitCheckoutVersion(customerPackage config.CustomerPackage, packageName stri
 		return
 	}
 
-	_, versionType := Control(customerPackage.Source)
+	_, versionType := GitShunt(customerPackage.Source)
 	var cmd *exec.Cmd
 	if versionType == "commit" {
 		cmd = exec.Command("git", "reset", "--hard", customerPackage.Version)

@@ -5,6 +5,7 @@ import (
 	"net/url"
 	"os"
 	"strings"
+	"trove/command/version"
 	"trove/config"
 )
 
@@ -20,7 +21,7 @@ func Require(args []string) {
 		fmt.Println("加载错误", err)
 	}
 
-	source, versionType := Control(args[0])
+	source, versionType := version.GitShunt(args[0])
 	//fmt.Println(source, versionControl)
 	//return
 	sourceUrl, err := url.Parse(source)
@@ -39,10 +40,10 @@ func Require(args []string) {
 		_, err := os.Stat("vendor/" + newPackageName)
 		if err != nil {
 			fmt.Println(newPackageName + " 包未加载到本地")
-			GitClone(customerPackage, newPackageName)
+			version.GitClone(customerPackage, newPackageName)
 		}
 		// 检测包版本信息
-		GitVersion(newPackageName, customerPackage)
+		version.GitVersion(newPackageName, customerPackage)
 
 		return
 	} else {
@@ -55,7 +56,7 @@ func Require(args []string) {
 		}
 		fmt.Println("已保存配置")
 		// 恢复包
-		GitClone(*newPackage, newPackageName)
+		version.GitClone(*newPackage, newPackageName)
 	}
 
 }
