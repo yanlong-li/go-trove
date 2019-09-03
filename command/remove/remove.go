@@ -9,11 +9,11 @@ import (
 func Remove(args []string) {
 	trovePackage, err := config.Load(config.TrovePackagePath)
 	if err != nil {
-		fmt.Println("配置文件加载失败")
+		fmt.Println("Configuration file loading failed")
 		return
 	}
 	if len(args) < 1 {
-		fmt.Println("请携带要移除的包名")
+		fmt.Println("Please bring the package name to be removed.")
 		fmt.Println("trove remove package/name")
 		return
 	} else {
@@ -22,17 +22,17 @@ func Remove(args []string) {
 			delete(trovePackage.Custom, newPackageName)
 			err = config.Save(trovePackage)
 			if err != nil {
-				fmt.Println("包移除失败", err)
+				fmt.Println("Packet Removal Failure", err)
 				return
 			}
 			err = os.RemoveAll("vendor/" + newPackageName)
 			if err != nil {
-				fmt.Println("目录移除失败", err)
+				fmt.Println("Directory Removal Failure", err)
 				return
 			}
-			fmt.Println("移除成功")
+			fmt.Println("Removal success")
 		} else {
-			fmt.Println("未引入包:" + newPackageName)
+			fmt.Println("No package introduced:" + newPackageName)
 		}
 	}
 

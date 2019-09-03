@@ -28,26 +28,26 @@ func GitVersion(packageName string, customerPackage config.CustomerPackage) {
 	//fmt.Println(cmd.Dir)
 	buf, err := cmd.Output()
 	if err != nil {
-		fmt.Println("版本检测失败", err)
+		fmt.Println("Version Detection Failed", err)
 		return
 	}
 	if len(buf) == 9 {
 		commitId := string(buf[1:8])
-		fmt.Println("当前版本:" + commitId)
+		fmt.Println("current version:" + commitId)
 	}
 }
 
 func GitClone(customerPackage config.CustomerPackage, packageName string) {
 
-	fmt.Println("正在恢复:" + packageName)
+	fmt.Println("Restoring:" + packageName)
 	source, _ := GitShunt(customerPackage.Source)
 	cmd := exec.Command("git", "clone", source, "vendor/"+packageName)
 	_, err := cmd.Output()
 	if err != nil {
-		fmt.Println("恢复失败", err)
+		fmt.Println("restore failed", err)
 		return
 	}
-	fmt.Println("下载成功")
+	fmt.Println("Download Successful")
 	// 切换分支
 	GitCheckoutBranch(customerPackage, packageName)
 	if customerPackage.Version != "*" {
@@ -57,15 +57,15 @@ func GitClone(customerPackage config.CustomerPackage, packageName string) {
 
 }
 func GitUpdate(customerPackage config.CustomerPackage, packageName string) {
-	fmt.Println("正在更新:" + packageName)
+	fmt.Println("Updating in progress:" + packageName)
 	cmd := exec.Command("git", "pull", "--all")
 	cmd.Dir = "vendor/" + packageName
 	_, err := cmd.Output()
 	if err != nil {
-		fmt.Println("更新失败", err)
+		fmt.Println("Update failed", err)
 		return
 	}
-	fmt.Println("更新成功")
+	fmt.Println("Update Successful")
 }
 
 func GitCheckoutBranch(customerPackage config.CustomerPackage, packageName string) {
@@ -74,7 +74,7 @@ func GitCheckoutBranch(customerPackage config.CustomerPackage, packageName strin
 	cmd.Dir = config.VendorPath + "/" + packageName
 	_, err := cmd.Output()
 	if err != nil {
-		fmt.Println("分支切换失败", err)
+		fmt.Println("Branch handover failure", err)
 		return
 	}
 	//git branch --set-upstream-to=origin/dev
@@ -82,16 +82,16 @@ func GitCheckoutBranch(customerPackage config.CustomerPackage, packageName strin
 	cmd.Dir = config.VendorPath + "/" + packageName
 	_, err = cmd.Output()
 	if err != nil {
-		fmt.Println("分支切换关联失败", err)
+		fmt.Println("Branch switching Association failure", err)
 		return
 	}
-	fmt.Println("分支切换成功")
+	fmt.Println("Successful branch switching")
 }
 
 func GitCheckoutVersion(customerPackage config.CustomerPackage, packageName string) {
 
 	if customerPackage.Version == "*" {
-		fmt.Println("无需切换版本")
+		fmt.Println("No need to switch versions")
 		return
 	}
 
@@ -102,15 +102,15 @@ func GitCheckoutVersion(customerPackage config.CustomerPackage, packageName stri
 	} else if versionType == "tag" {
 		cmd = exec.Command("git", "reset", customerPackage.Version)
 	} else {
-		fmt.Println("不支持的版本控制方式")
+		fmt.Println("Unsupported versioning")
 		return
 	}
 
 	cmd.Dir = config.VendorPath + "/" + packageName
 	_, err := cmd.Output()
 	if err != nil {
-		fmt.Println("版本切换失败", err)
+		fmt.Println("Version switching failed", err)
 		return
 	}
-	fmt.Println("版本切换成功")
+	fmt.Println("Successful version switching")
 }

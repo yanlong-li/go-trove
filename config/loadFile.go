@@ -3,7 +3,6 @@ package config
 import (
 	"encoding/json"
 	"io/ioutil"
-	"log"
 	"os"
 )
 
@@ -11,20 +10,20 @@ func Load(filePath string) (TrovePackage, error) {
 	var trovePackage TrovePackage
 	file, err := os.Open(filePath)
 	if err != nil {
-		log.Fatal("配置文件不存在", err)
+		//log.Fatal("Profile does not exist", err)
 		return trovePackage, err
 	}
 
 	fileByte, err := ioutil.ReadAll(file)
 	if err != nil {
-		log.Fatal("读取包配置错误", err)
+		//log.Fatal("Read Packet Configuration Error", err)
 		return trovePackage, err
 	}
 	defer file.Close()
 
 	err = json.Unmarshal(fileByte, &trovePackage)
 	if err != nil {
-		log.Fatal("配置转结构体失败", err)
+		//log.Fatal("Failure to configure switching structure", err)
 		return trovePackage, err
 	}
 

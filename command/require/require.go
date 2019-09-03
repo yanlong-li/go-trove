@@ -18,7 +18,7 @@ func Require(args []string) {
 	// 首先加载配置文件
 	trovePackage, err := config.Load(config.TrovePackagePath)
 	if err != nil {
-		fmt.Println("加载错误", err)
+		fmt.Println("Loading error", err)
 	}
 
 	source, versionType := version.GitShunt(args[0])
@@ -29,17 +29,17 @@ func Require(args []string) {
 		fmt.Println(err)
 	}
 	if sourceUrl == nil {
-		fmt.Println("源地址不合法")
+		fmt.Println("Illegal source address")
 		return
 	}
 	newPackageName := strings.ToLower(sourceUrl.Path[1:])
 
 	// 判断配置文件中是否存在指定的包
 	if customerPackage, ok := trovePackage.Custom[newPackageName]; ok {
-		fmt.Println("已引入包:", newPackageName)
+		fmt.Println("Introduced packages:", newPackageName)
 		_, err := os.Stat("vendor/" + newPackageName)
 		if err != nil {
-			fmt.Println(newPackageName + " 包未加载到本地")
+			fmt.Println(newPackageName + " Packet not loaded locally")
 			version.GitClone(customerPackage, newPackageName)
 		}
 		// 检测包版本信息
@@ -52,9 +52,9 @@ func Require(args []string) {
 		trovePackage.Custom[newPackageName] = *newPackage
 		err = config.Save(trovePackage)
 		if err != nil {
-			fmt.Println("保存配置文件失败")
+			fmt.Println("Failed to save configuration file")
 		}
-		fmt.Println("已保存配置")
+		fmt.Println("Saved configuration")
 		// 恢复包
 		version.GitClone(*newPackage, newPackageName)
 	}

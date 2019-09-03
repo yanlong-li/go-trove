@@ -10,7 +10,7 @@ import (
 func Install(args []string) {
 	trovePackage, err := config.Load(config.TrovePackagePath)
 	if err != nil {
-		fmt.Println("配置文件加载失败")
+		fmt.Println("Configuration file loading failed")
 		return
 	}
 	if len(args) > 0 {
@@ -24,7 +24,7 @@ func Install(args []string) {
 			version.GitVersion(newPackageName, customerPackage)
 			fmt.Println()
 		} else {
-			fmt.Println("未引入包:" + newPackageName)
+			fmt.Println("No package introduced:" + newPackageName)
 		}
 	} else {
 		for k, v := range trovePackage.Custom {
