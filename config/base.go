@@ -26,7 +26,13 @@ type Author struct {
 	Description string // 描述
 }
 
-var TrovePackagePath string = "trove.json"
-var Version string = "0.0.1"
+type TrovePackages struct {
+	Packages       map[string]TrovePackage // 包列表
+	GenerationTime string                  // 生成时间
+}
 
-var VendorPath string = "vendor"
+var TrovePackagesLock = map[string]TrovePackage{}
+var TrovePackagePath = "trove.json"     // 包配置文件
+var TrovePackageLockPath = "trove.lock" // 包配置锁定文件
+var Version = "0.0.1"                   // 默认版本
+var VendorPath = "vendor/"              // 包储存目录

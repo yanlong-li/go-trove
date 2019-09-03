@@ -24,7 +24,7 @@ func GitShunt(url string) (source, versionControl string) {
 func GitVersion(packageName string, customerPackage config.CustomerPackage) {
 
 	cmd := exec.Command("git", "log", "--pretty=format:\"%h\"")
-	cmd.Dir = "vendor/" + packageName
+	cmd.Dir = config.VendorPath + packageName
 	//fmt.Println(cmd.Dir)
 	buf, err := cmd.Output()
 	if err != nil {
@@ -41,7 +41,7 @@ func GitClone(customerPackage config.CustomerPackage, packageName string) {
 
 	fmt.Println("Restoring:" + packageName)
 	source, _ := GitShunt(customerPackage.Source)
-	cmd := exec.Command("git", "clone", source, "vendor/"+packageName)
+	cmd := exec.Command("git", "clone", source, config.VendorPath+packageName)
 	_, err := cmd.Output()
 	if err != nil {
 		fmt.Println("restore failed", err)
@@ -59,7 +59,7 @@ func GitClone(customerPackage config.CustomerPackage, packageName string) {
 func GitUpdate(customerPackage config.CustomerPackage, packageName string) {
 	fmt.Println("Updating in progress:" + packageName)
 	cmd := exec.Command("git", "pull", "--all")
-	cmd.Dir = "vendor/" + packageName
+	cmd.Dir = config.VendorPath + packageName
 	_, err := cmd.Output()
 	if err != nil {
 		fmt.Println("Update failed", err)
@@ -71,7 +71,7 @@ func GitUpdate(customerPackage config.CustomerPackage, packageName string) {
 func GitCheckoutBranch(customerPackage config.CustomerPackage, packageName string) {
 	// 切换分支
 	cmd := exec.Command("git", "checkout", "-b", "_trove")
-	cmd.Dir = config.VendorPath + "/" + packageName
+	cmd.Dir = config.VendorPath + packageName
 	_, err := cmd.Output()
 	if err != nil {
 		fmt.Println("Branch handover failure", err)
@@ -79,7 +79,7 @@ func GitCheckoutBranch(customerPackage config.CustomerPackage, packageName strin
 	}
 	//git branch --set-upstream-to=origin/dev
 	cmd = exec.Command("git", "branch", "--set-upstream-to=origin/master")
-	cmd.Dir = config.VendorPath + "/" + packageName
+	cmd.Dir = config.VendorPath + packageName
 	_, err = cmd.Output()
 	if err != nil {
 		fmt.Println("Branch switching Association failure", err)
@@ -106,7 +106,7 @@ func GitCheckoutVersion(customerPackage config.CustomerPackage, packageName stri
 		return
 	}
 
-	cmd.Dir = config.VendorPath + "/" + packageName
+	cmd.Dir = config.VendorPath + packageName
 	_, err := cmd.Output()
 	if err != nil {
 		fmt.Println("Version switching failed", err)

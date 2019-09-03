@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"log"
 	"os"
+	"time"
 )
 
 func Save(trovePackage TrovePackage) error {
@@ -19,6 +20,34 @@ func Save(trovePackage TrovePackage) error {
 	_ = json.Indent(&out, v1, "", "\t")
 	//创建文件
 	file, err := os.Create(TrovePackagePath)
+	if err != nil {
+		log.Fatal(err)
+		return nil
+	}
+	// 写入数据
+	_, err = file.WriteString(out.String())
+	if err != nil {
+		log.Fatal(err)
+		return err
+	}
+	return nil
+}
+
+func SaveLock() error {
+	var trovePackages TrovePackages
+	trovePackages.GenerationTime = time.Now().Format("2006-01-02 15:04:05")
+	trovePackages.Packages = TrovePackagesLock
+	// 将结构体转义成JSON
+	v1, err := json.Marshal(trovePackages)
+	if err != nil {
+		log.Fatal(err)
+		return nil
+	}
+	var out bytes.Buffer
+	// 格式化Json到缓存区域
+	_ = json.Indent(&out, v1, "", "\t")
+	//创建文件
+	file, err := os.Create(TrovePackageLockPath)
 	if err != nil {
 		log.Fatal(err)
 		return nil

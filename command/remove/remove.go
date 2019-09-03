@@ -25,11 +25,12 @@ func Remove(args []string) {
 				fmt.Println("Packet Removal Failure", err)
 				return
 			}
-			err = os.RemoveAll("vendor/" + newPackageName)
+			err = os.RemoveAll(config.VendorPath + newPackageName)
 			if err != nil {
 				fmt.Println("Directory Removal Failure", err)
 				return
 			}
+			//todo 移除间引用包
 			fmt.Println("Removal success")
 		} else {
 			fmt.Println("No package introduced:" + newPackageName)

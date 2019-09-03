@@ -35,10 +35,6 @@ https://trove.daohang.dev
     可查看项目直接依赖列表
     trove --list--all
     可查看项目所有依赖列表，包括直接依赖和间接依赖
-#### 安装所有依赖包
-    trove install [packageName]
-    手动编辑 trove.json 增加依赖时，可使用该命令安装未下载的依赖包，或在初始化项目时下载所有的依赖包
-    [packageName] 可选安装单独依赖包
 #### 更新依赖包
     trove update [packageName]
     更新所有依赖包到版本限定范围内的最新版本
@@ -55,6 +51,11 @@ https://trove.daohang.dev
 [Yanlong-li](https://github.com/yanlong-li)
 
 ## 更新日志
+    
+    2019年9月3日
+    增加递归依赖处理
+    重新整理 install 、update 、 require逻辑
+    移除 install 命令，功能和 update 功能重合
     2019年9月3日
     增加 init 命令进行项目的初始化
     2019年9月3日

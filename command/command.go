@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"trove/command/create"
 	Help "trove/command/help"
-	"trove/command/install"
 	"trove/command/list"
 	"trove/command/remove"
 	"trove/command/require"
+	"trove/command/test"
 	"trove/command/update"
 )
 
@@ -32,12 +32,12 @@ func Shunt(args []string) {
 		fallthrough
 	case "--version":
 		Help.Version()
-	case "install":
-		install.Install(args[1:])
 	case "update":
 		update.Update(args[1:])
 	case "remove":
 		remove.Remove(args[1:])
+	case "test":
+		test.Test()
 	default:
 		fmt.Println("No matching commands were found", args)
 	}

@@ -29,3 +29,24 @@ func Load(filePath string) (TrovePackage, error) {
 
 	return trovePackage, nil
 }
+
+func LoadLock() (TrovePackages, error) {
+	var trovePackages TrovePackages
+	file, err := os.Open(TrovePackageLockPath)
+	if err != nil {
+		return trovePackages, err
+	}
+
+	fileByte, err := ioutil.ReadAll(file)
+	if err != nil {
+		return trovePackages, err
+	}
+	defer file.Close()
+
+	err = json.Unmarshal(fileByte, &trovePackages)
+	if err != nil {
+		return trovePackages, err
+	}
+
+	return trovePackages, nil
+}
