@@ -15,6 +15,8 @@ func Shunt(args []string) {
 	case "--list":
 		fmt.Println("PackageList:")
 		_, _ = list.Get()
+	case "--list--all":
+		fmt.Println("功能未开放")
 	case "require":
 		require.Require(args[1:])
 	case "-h":
@@ -23,7 +25,7 @@ func Shunt(args []string) {
 		Help.Header()
 		Help.Version()
 		Help.Command()
-	case "-v":
+	case "-V":
 		fallthrough
 	case "--version":
 		Help.Version()
