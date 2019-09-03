@@ -2,7 +2,7 @@ package remove
 
 import (
 	"fmt"
-	"os"
+	"trove/command/depend"
 	"trove/config"
 )
 
@@ -25,12 +25,13 @@ func Remove(args []string) {
 				fmt.Println("Packet Removal Failure", err)
 				return
 			}
-			err = os.RemoveAll(config.VendorPath + newPackageName)
+			//移除间引用包
+			depend.Remove(newPackageName)
+			// 更新锁定配置
+			err = config.SaveLock()
 			if err != nil {
-				fmt.Println("Directory Removal Failure", err)
-				return
+				fmt.Println("Failed to update Lock configuration")
 			}
-			//todo 移除间引用包
 			fmt.Println("Removal success")
 		} else {
 			fmt.Println("No package introduced:" + newPackageName)

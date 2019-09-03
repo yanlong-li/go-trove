@@ -19,15 +19,16 @@ func HandlePackage(customerPackageName string, customerPackage config.CustomerPa
 	if trovePackage.Name == customerPackageName {
 		// 当前包无需额外处理
 		// 将指定包信息写入锁定表
-		config.TrovePackagesLock[trovePackage.Name] = trovePackage
+		//config.TrovePackages[trovePackage.Name] = config.TroveLockPackage{TrovePackage: trovePackage}
 		return
 	}
-	if _, ok := config.TrovePackagesLock[customerPackageName]; ok {
+	if troveLockPackage, ok := config.TrovePackages[customerPackageName]; ok {
 		// 已处理过，无需再次处理
+		troveLockPackage.Use++
+		config.TrovePackages[customerPackageName] = troveLockPackage
 		return
 	}
-	// 将该包写入锁定区域
-	config.TrovePackagesLock[trovePackage.Name] = trovePackage
+
 	// 判断文件夹是否存在
 	_, err = os.Stat(config.VendorPath + customerPackageName)
 	// 如果不存在则启动 git 克隆
@@ -41,12 +42,17 @@ func HandlePackage(customerPackageName string, customerPackage config.CustomerPa
 	// 已存在或克隆后输出版本信息
 	version.GitVersion(customerPackageName, customerPackage)
 	fmt.Println()
+
+	// 加载指定包的配置信息，如果没有则新建零值配置信息
 	// 递归加载所有的依赖
-	dependPackage, err := config.Load(config.VendorPath + customerPackageName)
+	dependPackage, err := config.Load(config.VendorPath + customerPackageName + "/" + config.TrovePackagePath)
 	if err != nil {
-		//fmt.Println("加载配置文件失败")
+		// 将该包写入锁定区域
+		config.TrovePackages[customerPackageName] = config.TroveLockPackage{TrovePackage: config.TrovePackage{Name: customerPackageName, Version: customerPackage.Version, Type: config.TypeModule}, Use: 1}
 		return
 	} else {
+		// 将该包写入锁定区域
+		config.TrovePackages[customerPackageName] = config.TroveLockPackage{TrovePackage: dependPackage, Use: 1}
 		for k, v := range dependPackage.Custom {
 			HandlePackage(k, v)
 		}

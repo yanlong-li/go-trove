@@ -2,6 +2,7 @@ package config
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"os"
 )
@@ -23,6 +24,7 @@ func Load(filePath string) (TrovePackage, error) {
 
 	err = json.Unmarshal(fileByte, &trovePackage)
 	if err != nil {
+		fmt.Println(string(fileByte))
 		//log.Fatal("Failure to configure switching structure", err)
 		return trovePackage, err
 	}
@@ -30,9 +32,9 @@ func Load(filePath string) (TrovePackage, error) {
 	return trovePackage, nil
 }
 
-func LoadLock() (TrovePackages, error) {
-	var trovePackages TrovePackages
-	file, err := os.Open(TrovePackageLockPath)
+func LoadLock() (TrovePackagesLock, error) {
+	var trovePackages TrovePackagesLock
+	file, err := os.Open(TrovePackagesLockPath)
 	if err != nil {
 		return trovePackages, err
 	}

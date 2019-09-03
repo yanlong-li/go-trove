@@ -34,9 +34,9 @@ func Save(trovePackage TrovePackage) error {
 }
 
 func SaveLock() error {
-	var trovePackages TrovePackages
+	var trovePackages TrovePackagesLock
 	trovePackages.GenerationTime = time.Now().Format("2006-01-02 15:04:05")
-	trovePackages.Packages = TrovePackagesLock
+	trovePackages.Packages = TrovePackages
 	// 将结构体转义成JSON
 	v1, err := json.Marshal(trovePackages)
 	if err != nil {
@@ -47,7 +47,7 @@ func SaveLock() error {
 	// 格式化Json到缓存区域
 	_ = json.Indent(&out, v1, "", "\t")
 	//创建文件
-	file, err := os.Create(TrovePackageLockPath)
+	file, err := os.Create(TrovePackagesLockPath)
 	if err != nil {
 		log.Fatal(err)
 		return nil

@@ -8,7 +8,7 @@ import (
 
 func Update(args []string) {
 	// 清空锁定文件
-	config.TrovePackagesLock = config.TrovePackages{}.Packages
+	config.TrovePackages = make(map[string]config.TroveLockPackage)
 	trovePackage, err := config.Load(config.TrovePackagePath)
 	if err != nil {
 		fmt.Println("Configuration file loading failed")

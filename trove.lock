@@ -1,0 +1,45 @@
+{
+	"Packages": {
+		"yanlong-li/test": {
+			"Name": "yanlong-li/test",
+			"Version": "*",
+			"Description": "",
+			"Keywords": null,
+			"Homepage": "",
+			"Type": "module",
+			"License": "",
+			"Authors": null,
+			"Support": null,
+			"Require": null,
+			"Custom": null,
+			"Use": 2
+		},
+		"yanlong-li/test2": {
+			"Name": "test2",
+			"Version": "0.0.1",
+			"Description": "test2",
+			"Keywords": null,
+			"Homepage": "https://github.com/Yanlong-LI/test2",
+			"Type": "module",
+			"License": "MulanPSL",
+			"Authors": [
+				{
+					"Name": "Yanlong-li",
+					"Email": "ahlyl94@gmail.com",
+					"Description": "Core developers"
+				}
+			],
+			"Support": null,
+			"Require": null,
+			"Custom": {
+				"yanlong-li/test": {
+					"Version": "0.0.0.3",
+					"Source": "tag@https://github.com/Yanlong-LI/test",
+					"Type": "git"
+				}
+			},
+			"Use": 1
+		}
+	},
+	"GenerationTime": "2019-09-03 22:37:14"
+}

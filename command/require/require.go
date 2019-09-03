@@ -34,10 +34,9 @@ func Require(args []string) {
 	newPackageName := strings.ToLower(sourceUrl.Path[1:])
 
 	// 判断配置文件中是否存在指定的包
-	if customerPackage, ok := trovePackage.Custom[newPackageName]; ok {
+	if _, ok := trovePackage.Custom[newPackageName]; ok {
 		fmt.Println("Introduced packages:", newPackageName)
-		depend.HandlePackage(newPackageName, customerPackage)
-		return
+		//depend.HandlePackage(newPackageName, customerPackage)
 	} else {
 		// 如果没有则写入新记录到列表中 默认版本号为 * 默认类型为 git ，git默认版本控制方式为 commit:
 		newPackage := &config.CustomerPackage{Version: "*", Type: "git", Source: versionType + "@" + source}

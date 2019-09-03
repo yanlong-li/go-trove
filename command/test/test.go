@@ -10,6 +10,6 @@ func Test() {
 	if err != nil {
 		log.Fatal("加载配置文件失败", err)
 	}
-	config.TrovePackagesLock[trovePackage.Name] = trovePackage
+	config.TrovePackages[trovePackage.Name] = config.TroveLockPackage{TrovePackage: trovePackage, Use: 1}
 	Lock()
 }

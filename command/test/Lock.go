@@ -3,10 +3,10 @@ package test
 import ()
 
 func Lock() {
-	//fmt.Println(config.TrovePackagesLock)
+	//fmt.Println(config.TrovePackages)
 	//
-	//var troveLock config.TrovePackages
-	//for _, v := range config.TrovePackagesLock {
+	//var troveLock config.TrovePackagesLock
+	//for _, v := range config.TrovePackages {
 	//	troveLock.Packages = append(troveLock.Packages, v)
 	//}
 	//

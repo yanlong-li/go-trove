@@ -9,6 +9,7 @@ import (
 
 // GIT 版本控制 分流 目前支持 commit@ tag@
 func GitShunt(url string) (source, versionControl string) {
+	url = strings.ToLower(url)
 	versionControlPos := strings.Index(url, "@")
 	if versionControlPos < 0 || url[:versionControlPos] == "git" {
 		versionControl = "commit"
@@ -16,6 +17,9 @@ func GitShunt(url string) (source, versionControl string) {
 	} else {
 		versionControl = url[:versionControlPos]
 		source = url[versionControlPos+1:]
+	}
+	if len(source) > 4 && source[len(source)-4:] == ".git" {
+		source = source[:len(source)-4]
 	}
 	return source, versionControl
 }
@@ -53,6 +57,8 @@ func GitClone(customerPackage config.CustomerPackage, packageName string) {
 	if customerPackage.Version != "*" {
 		// 切换版本
 		GitCheckoutVersion(customerPackage, packageName)
+	} else {
+		fmt.Println("No version requirement, default latest version")
 	}
 
 }

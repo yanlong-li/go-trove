@@ -46,15 +46,41 @@ Publish Open Source Based on [MulanPSL](http://license.coscl.org.cn/MulanPSL) Li
     Trove -h,--help
     View Trove Help Information
 ## Development Team
-    > No ranking
-    [Yanlong-li] (https://github.com/yanlong-li)
+> No ranking
+
+[Yanlong-li] (https://github.com/yanlong-li)
+
 ## Update logs
+
+    September 3, 2019
+    Reporting Error Problem Caused by Initialization of Fixed Update Operations Not Assigned to Zero
+    Repair require operation. lock file exists, but packages parameter is nil time error problem
+    Fixed parameter error when writing dependency packages
+    Adding Removal Recursive Removal Dependencies
+    Adjust. lock to continue traovpackage to increase use count parameters
+    Modified Regression Processing Unupdated Use Count Problem
+    Optimize deletion of current project write.lock
+    entry name
+    Fix Dependency Item Not Written. Lock Problem
+    Optimizing Citation Dependent Time Chain
+    Updated version 0.0.1.13
+    
+    September 3, 2019
+    Increasing recursive dependency processing
+    Reorganization of install, update, require logic
+    Remove the install command, and overlap the update function
+    
+    September 3, 2019
+    Increase init command to initialize project
+    
     September 3, 2019
     Optimizing version control structure
     Fixed the problem of not switching to the specified version when updating a single package
+    
     September 2, 2019
     The new git version control support Tag tag@https://github.com/XXXXX/XXXXXX defaults to commit@https://github.com/XXXXXX
     Optimizing git@ssh import package
+    
     September 2, 2019
     Enhanced command line
     Add require command to introduce git package
