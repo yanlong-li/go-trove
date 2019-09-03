@@ -2,6 +2,7 @@ package command
 
 import (
 	"fmt"
+	"trove/command/create"
 	Help "trove/command/help"
 	"trove/command/install"
 	"trove/command/list"
@@ -12,11 +13,13 @@ import (
 
 func Shunt(args []string) {
 	switch args[0] {
+	case "init":
+		create.Create()
 	case "--list":
 		fmt.Println("PackageList:")
 		_, _ = list.Get()
 	case "--list--all":
-		fmt.Println("功能未开放")
+		fmt.Println("Not yet supported")
 	case "require":
 		require.Require(args[1:])
 	case "-h":
@@ -36,6 +39,6 @@ func Shunt(args []string) {
 	case "remove":
 		remove.Remove(args[1:])
 	default:
-		fmt.Println("没有发现任何匹配命令", args)
+		fmt.Println("No matching commands were found", args)
 	}
 }
