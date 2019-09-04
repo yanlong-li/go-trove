@@ -20,12 +20,7 @@
 	"Custom": {
 		"yanlong-li/test": {
 			"Version": "*",
-			"Source": "commit@https://github.com/Yanlong-LI/test",
-			"Type": "git"
-		},
-		"yanlong-li/test2": {
-			"Version": "*",
-			"Source": "commit@https://github.com/Yanlong-LI/test2",
+			"Source": "commit@git@github.com:yanlong-li/test",
 			"Type": "git"
 		}
 	}

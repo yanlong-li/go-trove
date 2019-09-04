@@ -27,11 +27,21 @@ func Require(args []string) {
 	if err != nil {
 		fmt.Println(err)
 	}
+	newPackageName := ""
 	if sourceUrl == nil {
-		fmt.Println("Illegal source address")
-		return
+		// 如果协议为git@
+		versionControlPos := strings.Index(source, "@")
+		if source[:versionControlPos] == "git" {
+			pathpos := strings.Index(source, ":")
+			newPackageName = strings.ToLower(source[pathpos+1:])
+		} else {
+			fmt.Println("Illegal source address")
+			return
+		}
+
+	} else {
+		newPackageName = strings.ToLower(sourceUrl.Path[1:])
 	}
-	newPackageName := strings.ToLower(sourceUrl.Path[1:])
 
 	// 判断配置文件中是否存在指定的包
 	if _, ok := trovePackage.Custom[newPackageName]; ok {

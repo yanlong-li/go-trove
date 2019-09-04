@@ -6,7 +6,7 @@ Trove 是 Go 语言的包依赖管理器。使用最新 `v1.12.9` SDK 编译，�
 Trove 因属于实验性项目，没有资金去建立单独的包管理服务，目前采用Git仓库式管理，测试兼容GitHub仓库，理论上支持所有GIT代码仓库（未测试），省却单独服务器的开销；
 
 Trove 可随意引入私有仓库代码包（需要拥有仓库克隆权限），随意引用私有仓库代码无需额外配置与搭建私有服务器。
-
+`需要注意，目前支持的私有仓库地址需要使用git协议，即：git@xxxx:xxxx/xxx, 走ssh通道，请确保您已配置ssh秘钥`
 Trove 基于 Git ,所以请确保您的运行环境已安装Git，并可全局使用git命令
 ## 官网
 https://trove.daohang.dev
@@ -19,7 +19,7 @@ https://trove.daohang.dev
 #### 初始化
     trove init
 #### 引用依赖
-    trove require https://github.com/XXXXXX
+    trove require https://github.com/XXXXXX [commitId]
         默认为 commit 版本控制 等同于如下
         trove require commit@https://github.com/XXXXXX
         [commitId] 可选 commitId 版本，默认为最新版
